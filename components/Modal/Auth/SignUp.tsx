@@ -2,16 +2,22 @@ import { authModalState } from "@/atoms/authModalAtom";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
-
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { firestore, auth } from "@/firebase/clientApp";
+import { FIREBASE_ERRORS } from "@/firebase/error";
 type SignUpProps = {};
 
 const SignUp: React.FC<SignUpProps> = () => {
+  const [error, setError] = useState("");
   const [signupForm, setSignupForm] = useState({
-    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
-  const { name, email, password } = signupForm;
+  const { email, password, confirmPassword } = signupForm;
+  const [createUserWithEmailAndPassword, user, loading, userError] =
+    useCreateUserWithEmailAndPassword(auth);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignupForm((prev) => ({
       ...prev,
@@ -19,26 +25,17 @@ const SignUp: React.FC<SignUpProps> = () => {
     }));
   };
   const setAuthModalState = useSetRecoilState(authModalState);
+  const handleSubmiit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (error) setError("");
+    if (confirmPassword !== password) {
+      setError("Passwords do not match");
+      return;
+    }
+    createUserWithEmailAndPassword(email, password);
+  };
   return (
-    <form>
-      <Input
-        required
-        name="name"
-        type="text"
-        placeholder="Full Name"
-        onChange={handleChange}
-        mb={2}
-        fontSize="10pt"
-        _placeholder={{ color: "gray.500" }}
-        _hover={{ bg: "white", border: "1px solid", borderColor: "blue.500" }}
-        _focus={{
-          outline: "none",
-          bg: "white",
-          border: "1px solid",
-          borderColor: "blue.500",
-        }}
-        bg="gray.50"
-      />
+    <form onSubmit={handleSubmiit}>
       <Input
         onChange={handleChange}
         required
@@ -76,10 +73,28 @@ const SignUp: React.FC<SignUpProps> = () => {
         }}
         bg="gray.50"
       />
-      {/* <Text textAlign="center" color="red" fontSize="10pt">
-        {FIREBASE_ERRORS[error?.message as keyof typeof FIREBASE_ERRORS]}
-        
-      </Text> */}
+      <Input
+        required
+        name="confirmPassword"
+        placeholder="Confirm Password"
+        type="password"
+        onChange={handleChange}
+        mb={2}
+        fontSize="10pt"
+        _placeholder={{ color: "gray.500" }}
+        _hover={{ bg: "white", border: "1px solid", borderColor: "blue.500" }}
+        _focus={{
+          outline: "none",
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
+        bg="gray.50"
+      />
+      <Text textAlign="center" color="red" fontSize="10pt">
+        {error ||
+          FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+      </Text>
 
       <Button
         width="100%"
@@ -87,7 +102,7 @@ const SignUp: React.FC<SignUpProps> = () => {
         mt={2}
         mb={2}
         type="submit"
-        // isLoading={loading}
+        isLoading={loading}
       >
         Sign Up
       </Button>
