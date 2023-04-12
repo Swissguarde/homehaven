@@ -46,7 +46,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
           align="center"
           justify="center"
         >
-          <Box flex={1} mr={2}>
+          <Box mr={{ md: 2 }} flex={1} width="100%">
             <Text fontSize="10pt">LOOKING FOR</Text>
             <Input
               type="text"
@@ -69,7 +69,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
               }}
             />
           </Box>
-          <Box flex={1} mr={2}>
+          <Box mr={{ md: 2 }} flex={1} width="100%">
             <Text fontSize="10pt">LOCATION</Text>
             <Input
               type="text"
@@ -92,7 +92,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
               }}
             />
           </Box>
-          <Box mr={2} flex={1}>
+          <Box mr={{ md: 2 }} flex={1} width="100%">
             <Text fontSize="10pt">PROPERTY SIZE</Text>
             <Input
               type="text"
@@ -116,7 +116,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
               mr={10}
             />
           </Box>
-          <Box mr={2} flex={1}>
+          <Box mr={{ md: 2 }} flex={1} width="100%">
             <Text fontSize="10pt">YOUR BUDGET</Text>
             <Input
               type="text"

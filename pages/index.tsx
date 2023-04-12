@@ -1,3 +1,4 @@
+import Featured from "@/components/Featured/Featured";
 import Hero from "@/components/Hero/Hero";
 import { Box } from "@chakra-ui/react";
 import Head from "next/head";
@@ -12,6 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Hero />
+      <Featured />
     </Box>
   );
 }
