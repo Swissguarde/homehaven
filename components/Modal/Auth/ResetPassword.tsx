@@ -28,7 +28,7 @@ const ResetPassword: React.FC = () => {
       </Text>
 
       {success ? (
-        <Text mb={4}>Check your email :)</Text>
+        <Text mb={4}>Check your email / *spam </Text>
       ) : (
         <>
           <Text textAlign="center" fontSize="sm" mb={2}>
