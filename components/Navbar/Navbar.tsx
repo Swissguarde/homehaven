@@ -39,9 +39,11 @@ const Navbar: React.FC<NavbarProps> = () => {
   return (
     <Flex
       position="fixed"
+      top="0"
+      left="0"
       zIndex="10"
       width="100%"
-      padding={{ base: "12px 24px", md: "20px 80px" }}
+      padding={{ base: "16px 24px", lg: "20px 80px" }}
       justify="space-between"
       align="center"
       bgColor={`${scroll && "#004274"}`}
@@ -67,7 +69,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 
       <Flex
         fontSize="14pt"
-        display={{ base: "none", md: "flex" }}
+        display={{ base: "none", lg: "flex" }}
         color="white"
         textTransform="uppercase"
       >

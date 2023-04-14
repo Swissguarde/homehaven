@@ -63,8 +63,8 @@ const Hero: React.FC<HeroProps> = () => {
         position="absolute"
         left="1/2"
         bottom={{ base: "-5rem", md: ".2rem" }}
-        width="100%"
         paddingX={{ base: "14px", md: "5rem", lg: "10rem" }}
+        width="100%"
       >
         <SearchBar />
       </Box>

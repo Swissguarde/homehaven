@@ -60,26 +60,45 @@ const Featured: React.FC<FeaturedProps> = () => {
   const rowRef = useRef<HTMLDivElement>(null);
   const handleClick = (direction: string) => {
     if (rowRef.current) {
-      const { scrollLeft, clientWidth } = rowRef.current;
+      const { scrollLeft } = rowRef.current;
+      const listingWidth = rowRef.current.children[0].clientWidth + 20;
+      const scrollAmount = listingWidth;
       const scrollTo =
         direction === "left"
-          ? scrollLeft - clientWidth
-          : scrollLeft + clientWidth;
+          ? scrollLeft - scrollAmount
+          : scrollLeft + scrollAmount;
 
       rowRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
     }
   };
 
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => handleClick("right"), 5000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
   useEffect(() => {
-    const intervalId = setInterval(() => handleClick("right"), 2000);
-    return () => clearInterval(intervalId);
+    let intervalId: NodeJS.Timer | null = null;
+    const handleAutoScroll = () => {
+      if (rowRef.current) {
+        const { scrollWidth, scrollLeft, clientWidth } = rowRef.current;
+        const isAtEnd = scrollWidth - scrollLeft === clientWidth;
+        if (isAtEnd) {
+          rowRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          handleClick("right");
+        }
+      }
+    };
+    intervalId = setInterval(handleAutoScroll, 7000);
+    // return () => clearInterval(intervalId as NodeJS.Timer);
   }, []);
 
   return (
     <Box
       height="450px"
       mt={{ base: 64, md: 32 }}
-      paddingX={{ base: "20px", md: "50px" }}
+      paddingX={{ base: "40px", md: "50px" }}
       width="100%"
     >
       <Text fontSize={{ base: "17pt", md: "24pt" }} mb={6} textAlign="center">
@@ -96,7 +115,7 @@ const Featured: React.FC<FeaturedProps> = () => {
       <Flex height="100%" align="center" ref={rowRef} overflowX="scroll">
         {listings.map((listing, i) => (
           <Box
-            bgColor="gray.100"
+            bgColor="gray.200"
             key={i}
             position="relative"
             boxShadow="lg"
@@ -127,7 +146,7 @@ const Featured: React.FC<FeaturedProps> = () => {
                 {listing.parking && (
                   <Flex align="center">
                     <Icon fontSize="18pt" mr={1} as={MdGarage} />
-                    <Text>Parking Available</Text>
+                    <Text fontSize={{ base: "9pt" }}>Parking Available</Text>
                   </Flex>
                 )}
               </Flex>

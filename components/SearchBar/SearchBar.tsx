@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = () => {
   const [menuActive, setMenuActive] = useState(menuTab[0].title);
 
   return (
-    <Box>
+    <Box overflow="hidden">
       <Flex
         align="center"
         justify={{ base: "space-between", md: "center" }}
