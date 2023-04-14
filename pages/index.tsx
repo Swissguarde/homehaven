@@ -1,5 +1,7 @@
+import Cities from "@/components/Cities/Cities";
 import Featured from "@/components/Featured/Featured";
 import Hero from "@/components/Hero/Hero";
+import Testimonials from "@/components/Testimonials/Testimonials";
 import { Box } from "@chakra-ui/react";
 import Head from "next/head";
 
@@ -14,6 +16,8 @@ export default function Home() {
       </Head>
       <Hero />
       <Featured />
+      <Cities />
+      <Testimonials />
     </Box>
   );
 }
