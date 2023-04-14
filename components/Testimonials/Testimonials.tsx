@@ -10,7 +10,8 @@ const Testimonials: React.FC<TestimonialsProps> = () => {
       mt={60}
       bgColor="white"
       paddingX={{ base: "40px", lg: "100px" }}
-      paddingY={24}
+      paddingTop={24}
+      paddingBottom={40}
     >
       <Flex flexDirection="column" textAlign="center">
         <Text mb={4} fontSize={{ base: "17pt", md: "20pt" }}>
