@@ -1,4 +1,7 @@
+import { authModalState } from "@/atoms/authModalAtom";
+import { auth } from "@/firebase/clientApp";
 import {
+  Box,
   Flex,
   Icon,
   Menu,
@@ -7,19 +10,29 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
+import { signOut, User } from "firebase/auth";
+import { useRouter } from "next/router";
 import React from "react";
+import { AiOutlinePlus } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import { MdOutlineLogin } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
-import { CgProfile } from "react-icons/cg";
 import { useSetRecoilState } from "recoil";
-import { authModalState } from "@/atoms/authModalAtom";
 
 type UserMenuProps = {
-  user: boolean;
+  user?: User | null;
 };
 
 const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
+  const logOut = async () => {
+    signOut(auth);
+  };
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/create-listing");
+  };
   return (
     <Menu>
       <MenuButton
@@ -34,7 +47,20 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
       </MenuButton>
       <MenuList>
         {user ? (
-          <>
+          <Box>
+            <MenuItem
+              fontSize="10pt"
+              fontWeight={700}
+              _hover={{ bg: "blue.400", color: "white" }}
+              onClick={handleClick}
+            >
+              <Flex align="center">
+                <Icon fontSize={20} mr={2} as={AiOutlinePlus} />
+                Create Listing
+              </Flex>
+            </MenuItem>
+            <MenuDivider />
+
             <MenuItem
               fontSize="10pt"
               fontWeight={700}
@@ -50,13 +76,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "blue.400", color: "white" }}
+              onClick={logOut}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={MdOutlineLogin} />
                 Log Out
               </Flex>
             </MenuItem>
-          </>
+          </Box>
         ) : (
           <MenuItem
             onClick={() => setAuthModalState({ open: true, view: "login" })}
