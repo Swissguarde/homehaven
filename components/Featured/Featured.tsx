@@ -1,13 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import React, { useEffect, useRef } from "react";
 import { BiBath, BiBed } from "react-icons/bi";
-import { MdGarage, MdOutlineGarage } from "react-icons/md";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { MdGarage } from "react-icons/md";
 type FeaturedProps = {};
+interface Image {
+  url: string;
+}
+interface Listing {
+  image: Image[];
+  price: number;
+  type: "sale" | "rent";
+  title: string;
+  address: string;
+  bed: number;
+  bath: number;
+  parking: boolean;
+}
 
 const Featured: React.FC<FeaturedProps> = () => {
-  const listings = [
+  const listings: Listing[] = [
     {
-      image: "/images/hero2.jpg",
+      image: [{ url: "images/hero3.jpg" }, { url: "images/hero3.jpg" }],
       price: 250000,
       type: "sale",
       title: "Beautiful 3-Bedroom Home",
@@ -17,7 +31,7 @@ const Featured: React.FC<FeaturedProps> = () => {
       parking: true,
     },
     {
-      image: "/images/hero3.jpg",
+      image: [{ url: "images/beach.jpg" }, { url: "images/hero3.jpg" }],
       price: 1500,
       type: "rent",
       title: "Spacious 2-Bedroom Apartment",
@@ -27,7 +41,7 @@ const Featured: React.FC<FeaturedProps> = () => {
       parking: false,
     },
     {
-      image: "/images/beach.jpg",
+      image: [{ url: "images/hero2.jpg" }, { url: "images/hero3.jpg" }],
       price: 450000,
       type: "sale",
       title: "Stunning 4-Bedroom Estate",
@@ -37,7 +51,7 @@ const Featured: React.FC<FeaturedProps> = () => {
       parking: true,
     },
     {
-      image: "/images/hero2.jpg",
+      image: [{ url: "images/hero3.jpg" }, { url: "images/hero2.jpg" }],
       price: 2000,
       type: "rent",
       title: "Cozy 1-Bedroom Studio",
@@ -47,7 +61,7 @@ const Featured: React.FC<FeaturedProps> = () => {
       parking: true,
     },
     {
-      image: "/images/hero3.jpg",
+      image: [{ url: "images/beach.jpg" }, { url: "images/hero3.jpg" }],
       price: 350000,
       type: "sale",
       title: "Luxurious 5-Bedroom Mansion",
@@ -58,24 +72,44 @@ const Featured: React.FC<FeaturedProps> = () => {
     },
   ];
   const rowRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
   const handleClick = (direction: string) => {
     if (rowRef.current) {
-      const { scrollLeft } = rowRef.current;
-      const listingWidth = rowRef.current.children[0].clientWidth + 20;
+      const { scrollLeft, scrollWidth, clientWidth } = rowRef.current;
+      const listingWidth = rowRef.current.children[0].clientWidth + 22;
       const scrollAmount = listingWidth;
-      const scrollTo =
+      let scrollTo =
         direction === "left"
           ? scrollLeft - scrollAmount
           : scrollLeft + scrollAmount;
 
+      // If the carousel has reached the end, wrap around to the beginning
+      if (scrollTo + clientWidth > scrollWidth) {
+        scrollTo = 0;
+      }
+
       rowRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
     }
   };
+  const handleImageScroll = (direction: string) => {
+    if (imageRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = imageRef.current;
+      const imageWidth = imageRef.current.children[0].clientWidth;
+      const scrollAmount = imageWidth;
+      let scrollTo =
+        direction === "left"
+          ? scrollLeft - scrollAmount
+          : scrollLeft + scrollAmount;
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => handleClick("right"), 5000);
-  //   return () => clearInterval(intervalId);
-  // }, []);
+      // If the carousel has reached the end, wrap around to the beginning
+      if (scrollTo + clientWidth > scrollWidth) {
+        scrollTo = 0;
+      }
+
+      imageRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     let intervalId: NodeJS.Timer | null = null;
@@ -91,14 +125,14 @@ const Featured: React.FC<FeaturedProps> = () => {
       }
     };
     intervalId = setInterval(handleAutoScroll, 7000);
-    // return () => clearInterval(intervalId as NodeJS.Timer);
+    return () => clearInterval(intervalId as NodeJS.Timer);
   }, []);
 
   return (
     <Box
-      height="450px"
+      height="fit-content"
       mt={{ base: 64, md: 32 }}
-      paddingX={{ base: "40px", md: "50px" }}
+      paddingX={{ base: "20px", md: "50px" }}
       width="100%"
     >
       <Text fontSize={{ base: "17pt", md: "24pt" }} mb={6} textAlign="center">
@@ -112,23 +146,58 @@ const Featured: React.FC<FeaturedProps> = () => {
           Next
         </Button>
       </Flex>
-      <Flex height="100%" align="center" ref={rowRef} overflowX="scroll">
+      <Flex
+        height="100%"
+        align="center"
+        ref={rowRef}
+        overflowX="hidden"
+        borderRadius="10px"
+      >
         {listings.map((listing, i) => (
           <Box
             bgColor="gray.200"
             key={i}
-            position="relative"
+            // position="relative"
             boxShadow="lg"
             height="100%"
-            minWidth={{ base: "100%", md: "409px" }}
-            mr="20px"
+            minWidth={{ base: "100%", md: "410px" }}
+            mr={i === listings.length - 1 ? "0" : "20px"}
           >
-            <Image
-              src={listing.image}
+            <Box position="relative">
+              <Flex overflowX="scroll" ref={imageRef}>
+                {listing.image.map((url, i) => (
+                  <Image
+                    key={i}
+                    borderRadius="10px"
+                    src={url.url}
+                    objectFit="cover"
+                  />
+                ))}
+                <Box position="absolute" top="40%" left="4" zIndex="99">
+                  <Icon
+                    onClick={() => handleImageScroll("left")}
+                    fontSize={40}
+                    color="blue.400"
+                    as={BsChevronLeft}
+                  />
+                </Box>
+                <Box position="absolute" top="40%" right="4" zIndex="99">
+                  <Icon
+                    onClick={() => handleImageScroll("right")}
+                    fontSize={40}
+                    color="blue.400"
+                    as={BsChevronRight}
+                  />
+                </Box>
+              </Flex>
+            </Box>
+
+            {/* <Image
+              src="/images/beach.jpg"
               objectFit="cover"
               height="270px"
               width="100%"
-            />
+            /> */}
             <Flex padding="20px" flexDirection="column">
               <Text>{listing.title}</Text>
               <Text mt={1} fontSize="10pt" color="gray.400">

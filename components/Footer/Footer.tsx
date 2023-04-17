@@ -135,9 +135,9 @@ const Footer: React.FC<FooterProps> = () => {
           textAlign="center"
           textTransform="uppercase"
         >
-          <span>&copy; HomeHaven | {new Date().getFullYear()}</span>
+          <Box>&copy; HomeHaven | {new Date().getFullYear()}</Box>
           <Box>
-            <span className="space-1">
+            <Box className="space-1">
               {" "}
               Design & Dev:{" "}
               <a
@@ -149,8 +149,8 @@ const Footer: React.FC<FooterProps> = () => {
                 Ayomide
               </a>
               .
-            </span>
-            <span>
+            </Box>
+            <Box>
               This project is open source, you can checkout the repo{" "}
               <a
                 className="link"
@@ -160,7 +160,7 @@ const Footer: React.FC<FooterProps> = () => {
               >
                 here.
               </a>
-            </span>
+            </Box>
           </Box>
         </Flex>
       </Box>

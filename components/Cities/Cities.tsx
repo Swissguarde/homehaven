@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Flex, Grid, GridItem, Icon, Image, Text } from "@chakra-ui/react";
 import { FiPlay } from "react-icons/fi";
-
+import { motion } from "framer-motion";
 type CitiesProps = {};
 
 const Cities: React.FC<CitiesProps> = () => {
@@ -31,7 +31,7 @@ const Cities: React.FC<CitiesProps> = () => {
           </Flex>
         </GridItem>
 
-        {citiesInfo.map((city) => (
+        {citiesInfo.map((city, index) => (
           <GridItem
             key={city.id}
             position="relative"

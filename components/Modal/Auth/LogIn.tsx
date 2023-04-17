@@ -17,18 +17,18 @@ const LogIn: React.FC<LogInProps> = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+  console.log("user", user);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginForm((prev) => ({
       ...prev,
-      [e.target.name]: e.target,
+      [e.target.name]: e.target.value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signInWithEmailAndPassword(email, password);
-    console.log("loggedIn");
   };
 
   return (

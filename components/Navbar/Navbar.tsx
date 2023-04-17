@@ -1,6 +1,10 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { auth } from "@/firebase/clientApp";
+import { Box, Flex, Icon, Text } from "@chakra-ui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { AiOutlineBars } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import RightContent from "./RightContent/RightContent";
@@ -8,9 +12,11 @@ import RightContent from "./RightContent/RightContent";
 type NavbarProps = {};
 
 const Navbar: React.FC<NavbarProps> = () => {
-  const user = false;
+  const [user] = useAuthState(auth);
   const [isOpen, setIsOpen] = useState(false);
   const [scroll, setScroll] = useState<boolean>(false);
+  const router = useRouter();
+  const isNotHome = router.pathname !== "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +52,8 @@ const Navbar: React.FC<NavbarProps> = () => {
       padding={{ base: "16px 24px", lg: "20px 80px" }}
       justify="space-between"
       align="center"
-      bgColor={`${scroll && "#004274"}`}
+      bgColor={`${(scroll || isNotHome) && "#004274"}`}
+      boxShadow={`${scroll && "2xl"}`}
     >
       <Box
         onClick={toggleNav}
@@ -56,16 +63,38 @@ const Navbar: React.FC<NavbarProps> = () => {
         display={{ lg: "none" }}
         color="white"
       >
-        {isOpen ? <RxCross1 /> : <AiOutlineBars />}
+        <AnimatePresence>
+          {isOpen ? (
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 180 }}
+              exit={{ rotate: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              <RxCross1 />
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 0 }}
+              exit={{ rotate: 45 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              <AiOutlineBars />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Box>
-      <Flex
-        align="center"
-        fontSize={{ base: "19pt", md: "22pt" }}
-        fontWeight={700}
-      >
-        <Text color="white">home</Text>
-        <Text color="blue.400">Haven</Text>
-      </Flex>
+      <Link href="/">
+        <Flex
+          align="center"
+          fontSize={{ base: "19pt", md: "22pt" }}
+          fontWeight={700}
+        >
+          <Text color="white">home</Text>
+          <Text color="blue.400">Haven</Text>
+        </Flex>
+      </Link>
 
       <Flex
         fontSize="14pt"
@@ -74,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         textTransform="uppercase"
       >
         {navLinks.map((link, i) => (
-          <Link key={i} href={link.link} className="link">
+          <Link key={i} href={link.link}>
             <Text mr={5}>{link.title}</Text>
           </Link>
         ))}
@@ -97,7 +126,7 @@ const Navbar: React.FC<NavbarProps> = () => {
         transitionDuration=".7s"
       >
         {navLinks.map((link, i) => (
-          <Link key={i} href={link.link} className="link">
+          <Link key={i} href={link.link}>
             <Text my={5}>{link.title}</Text>
           </Link>
         ))}
