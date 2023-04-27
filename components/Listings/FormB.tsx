@@ -1,10 +1,31 @@
-import { Box, Button, Divider, Flex, Icon, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useRef } from "react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Icon,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { BiImageAdd } from "react-icons/bi";
+import { MdCancel } from "react-icons/md";
 
-type FormBProps = {};
+type FormBProps = {
+  selectedFile: string[];
+  setSelectedFile: (value: string[]) => void;
+  removeSelectedFile: (index: number) => void;
+  onSelectFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-const FormB: React.FC<FormBProps> = () => {
+const FormB: React.FC<FormBProps> = ({
+  onSelectFile,
+  selectedFile,
+  setSelectedFile,
+  removeSelectedFile,
+}) => {
+  const selectedFileRef = useRef<HTMLInputElement>(null);
+
   return (
     <>
       <Flex
@@ -19,6 +40,38 @@ const FormB: React.FC<FormBProps> = () => {
             <Text fontSize={{ lg: "12pt" }}>Media</Text>
           </Box>
           <Divider />
+
+          {selectedFile && (
+            <Flex
+              alignItems="center"
+              justify="center"
+              gap={3}
+              mt={3}
+              flexWrap="wrap"
+            >
+              {selectedFile.map((file, i) => (
+                <Box key={i} position="relative">
+                  <Image
+                    src={file}
+                    boxSize="150px"
+                    objectFit="cover"
+                    rounded="4px"
+                  />
+                  <Icon
+                    as={MdCancel}
+                    position="absolute"
+                    top="2"
+                    right="2"
+                    zIndex={50}
+                    color="white"
+                    fontSize="18pt"
+                    cursor="pointer"
+                    onClick={() => removeSelectedFile(i)}
+                  />
+                </Box>
+              ))}
+            </Flex>
+          )}
 
           <Box mt={10}>
             <Text>
@@ -56,6 +109,7 @@ const FormB: React.FC<FormBProps> = () => {
                   width={{ base: "70px", md: "110px" }}
                   mr={2}
                   padding="5px"
+                  onClick={() => selectedFileRef.current?.click()}
                 >
                   Upload
                 </Button>
@@ -63,7 +117,14 @@ const FormB: React.FC<FormBProps> = () => {
             </Box>
           </Box>
 
-          {/* <Button onChange={handleChange}> Rent</Button> */}
+          <input
+            type="file"
+            hidden
+            max="6"
+            multiple
+            ref={selectedFileRef}
+            onChange={onSelectFile}
+          />
         </Box>
       </Flex>
     </>

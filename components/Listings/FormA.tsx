@@ -1,4 +1,6 @@
 import {
+  Box,
+  Divider,
   Flex,
   Grid,
   GridItem,
@@ -10,17 +12,49 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-type FormAProps = {};
+type FormAProps = {
+  formData: {
+    propertyTitle: string;
+    propertyDescription: string;
+    propertyType: string;
+    propertyStatus: string;
+    propertyLabel: string;
+  };
+  handleChange: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
+};
 
-const FormA: React.FC<FormAProps> = () => {
+const FormA: React.FC<FormAProps> = ({ formData, handleChange }) => {
+  const {
+    propertyDescription,
+    propertyLabel,
+    propertyStatus,
+    propertyTitle,
+    propertyType,
+  } = formData;
   return (
-    <>
+    <Flex
+      flexDirection="column"
+      bg="white"
+      my={10}
+      padding="20px"
+      rounded="14px"
+      boxShadow="md"
+    >
+      <Box pb={4}>
+        <Text fontSize={{ lg: "12pt" }}>Description</Text>
+      </Box>
+      <Divider />
       <Flex flexDirection="column" justify="center" mt={10}>
-        <Text fontWeight={600}>Property Title *</Text>
+        <Text>Property Title *</Text>
         <Input
-          //   onChange={handleChange}
           required
-          name="title"
+          name="propertyTitle"
+          value={propertyTitle}
+          onChange={handleChange}
           placeholder="Enter your property title"
           type="text"
           mt={2}
@@ -41,10 +75,11 @@ const FormA: React.FC<FormAProps> = () => {
         />
       </Flex>
       <Flex flexDirection="column" justify="center" mt={10}>
-        <Text fontWeight={600}>Property Description *</Text>
+        <Text>Property Description *</Text>
         <Textarea
-          name="description"
-          //   onChange={handleChange}
+          name="propertyDescription"
+          value={propertyDescription}
+          onChange={handleChange}
           mt={2}
           placeholder="Enter your property's description"
           fontSize="10pt"
@@ -71,35 +106,49 @@ const FormA: React.FC<FormAProps> = () => {
       >
         <GridItem>
           <Stack mb={2}>
-            <Text fontWeight={600}>Type</Text>
-            <Select placeholder="Select option">
-              <option value="option1">Commercial</option>
-              <option value="option2">Residential</option>
+            <Text>Type</Text>
+            <Select
+              placeholder="Select option"
+              name="propertyType"
+              value={propertyType}
+              onChange={handleChange}
+            >
+              <option value="commercial">Commercial</option>
+              <option value="residential">Residential</option>
             </Select>
           </Stack>
         </GridItem>
 
         <GridItem>
           <Stack mb={2}>
-            <Text fontWeight={600}>Status</Text>
-            <Select placeholder="Select option">
-              <option value="option1">For Rent</option>
-              <option value="option2">For Sale</option>
+            <Text>Status</Text>
+            <Select
+              placeholder="Select option"
+              name="propertyStatus"
+              value={propertyStatus}
+              onChange={handleChange}
+            >
+              <option value="forRent">For Rent</option>
+              <option value="forSale">For Sale</option>
             </Select>
           </Stack>
         </GridItem>
         <GridItem>
           <Stack mb={2}>
-            <Text fontWeight={600}>Label</Text>
-            <Select placeholder="Select option">
-              <option value="option1">Hot Offer</option>
-              <option value="option2">Open House</option>
-              <option value="option2">Sold</option>
+            <Text>Label</Text>
+            <Select
+              placeholder="Select option"
+              name="propertyLabel"
+              value={propertyLabel}
+              onChange={handleChange}
+            >
+              <option value="hotOffer">Hot Offer</option>
+              <option value="openHouse">Open House</option>
             </Select>
           </Stack>
         </GridItem>
       </Grid>
-    </>
+    </Flex>
   );
 };
 export default FormA;
