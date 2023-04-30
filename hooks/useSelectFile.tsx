@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 const useSelectFile = () => {
-  const [selectedFile, setSelectedFile] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
 
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSelectFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
       const readers = Array.from(files).map((file) => {
@@ -23,13 +23,13 @@ const useSelectFile = () => {
             })
         )
       ).then((fileContents) => {
-        setSelectedFile(fileContents);
+        setSelectedFiles(fileContents);
       });
     }
   };
 
-  const removeSelectedFile = (index: number) => {
-    setSelectedFile((prev) => {
+  const removeSelectedFiles = (index: number) => {
+    setSelectedFiles((prev) => {
       const newSelectedFile = [...prev];
       newSelectedFile.splice(index, 1);
       return newSelectedFile;
@@ -37,10 +37,10 @@ const useSelectFile = () => {
   };
 
   return {
-    selectedFile,
-    setSelectedFile,
-    onSelectFile,
-    removeSelectedFile,
+    selectedFiles,
+    setSelectedFiles,
+    onSelectFiles,
+    removeSelectedFiles,
   };
 };
 
