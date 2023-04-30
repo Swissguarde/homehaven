@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = () => {
       position="fixed"
       top="0"
       left="0"
-      zIndex="10"
+      zIndex="50"
       width="100%"
       padding={{ base: "16px 24px", lg: "20px 80px" }}
       justify="space-between"

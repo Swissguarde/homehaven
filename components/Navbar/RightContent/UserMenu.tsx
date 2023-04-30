@@ -51,7 +51,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
             <MenuItem
               fontSize="10pt"
               fontWeight={700}
-              _hover={{ bg: "blue.400", color: "white" }}
+              _hover={{ bg: "#004274", color: "white" }}
               onClick={handleClick}
             >
               <Flex align="center">
@@ -64,7 +64,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
             <MenuItem
               fontSize="10pt"
               fontWeight={700}
-              _hover={{ bg: "blue.400", color: "white" }}
+              _hover={{ bg: "#004274", color: "white" }}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={CgProfile} />
@@ -75,7 +75,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
             <MenuItem
               fontSize="10pt"
               fontWeight={700}
-              _hover={{ bg: "blue.400", color: "white" }}
+              _hover={{ bg: "#004274", color: "white" }}
               onClick={logOut}
             >
               <Flex align="center">
