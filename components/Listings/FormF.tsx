@@ -8,7 +8,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 
 type FormFProps = {};
 
@@ -39,8 +39,8 @@ const FormF: React.FC<FormFProps> = () => {
           </Text>
           <RadioGroup>
             <Stack direction="row">
-              <Radio value="1">Yes</Radio>
-              <Radio value="2">No</Radio>
+              <Radio value="yes">Yes</Radio>
+              <Radio value="no">No</Radio>
             </Stack>
           </RadioGroup>
         </Flex>

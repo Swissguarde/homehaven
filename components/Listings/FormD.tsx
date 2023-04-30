@@ -1,39 +1,18 @@
-import {
-  Box,
-  Checkbox,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Checkbox, Divider, Grid, GridItem, Text } from "@chakra-ui/react";
 import React from "react";
 import { Feature } from "./CreateListingForm";
 
 type FormDProps = {
   featuresList: Feature[];
-  handleCheckboxChange: (index: number) => void;
-  checkedList: string[];
+  selectedFeatures: string[];
+  handleCheckboxChange: (title: string) => void;
 };
 
 const FormD: React.FC<FormDProps> = ({
-  featuresList,
-  checkedList,
   handleCheckboxChange,
+  featuresList,
+  selectedFeatures,
 }) => {
-  // const featuresList = [
-  //   { title: "Air Conditioning" },
-  //   { title: "Laundry" },
-  //   { title: "Wifi" },
-  //   { title: "Refridgerator" },
-  //   { title: "Washer" },
-  //   { title: "Lawn" },
-  //   { title: "Dryer" },
-  //   { title: "Microwave" },
-  //   { title: "Swimming Pool" },
-  //   { title: "TV Cable" },
-  //   { title: "Sauna" },
-  // ];
   return (
     <Box bg="white" my={10} padding="20px" rounded="14px" boxShadow="md">
       <Box pb={4}>
@@ -49,8 +28,8 @@ const FormD: React.FC<FormDProps> = ({
         {featuresList.map((features, i) => (
           <GridItem key={i}>
             <Checkbox
-              isChecked={Boolean(checkedList[i])}
-              onChange={() => handleCheckboxChange(i)}
+              isChecked={selectedFeatures.includes(features.title)}
+              onChange={() => handleCheckboxChange(features.title)}
             >
               {features.title}
             </Checkbox>

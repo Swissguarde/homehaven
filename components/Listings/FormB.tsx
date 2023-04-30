@@ -12,19 +12,19 @@ import { BiImageAdd } from "react-icons/bi";
 import { MdCancel } from "react-icons/md";
 
 type FormBProps = {
-  selectedFile: string[];
-  setSelectedFile: (value: string[]) => void;
-  removeSelectedFile: (index: number) => void;
-  onSelectFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  selectedFiles: string[];
+  setSelectedFiles: (value: string[]) => void;
+  removeSelectedFiles: (index: number) => void;
+  onSelectFiles: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const FormB: React.FC<FormBProps> = ({
-  onSelectFile,
-  selectedFile,
-  setSelectedFile,
-  removeSelectedFile,
+  onSelectFiles,
+  selectedFiles,
+  setSelectedFiles,
+  removeSelectedFiles,
 }) => {
-  const selectedFileRef = useRef<HTMLInputElement>(null);
+  const selectedFilesRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -36,12 +36,22 @@ const FormB: React.FC<FormBProps> = ({
         rounded="14px"
       >
         <Box>
-          <Box pb={4}>
+          <Flex pb={4} alignItems="center" justifyContent="space-between">
             <Text fontSize={{ lg: "12pt" }}>Media</Text>
-          </Box>
+            <Button
+              variant="outline"
+              onClick={() => setSelectedFiles([])}
+              height="34px"
+              width={{ base: "70px", md: "110px" }}
+              mr={2}
+              padding="5px"
+            >
+              Clear All
+            </Button>
+          </Flex>
           <Divider />
 
-          {selectedFile && (
+          {selectedFiles && (
             <Flex
               alignItems="center"
               justify="center"
@@ -49,7 +59,7 @@ const FormB: React.FC<FormBProps> = ({
               mt={3}
               flexWrap="wrap"
             >
-              {selectedFile.map((file, i) => (
+              {selectedFiles.map((file, i) => (
                 <Box key={i} position="relative">
                   <Image
                     src={file}
@@ -62,11 +72,11 @@ const FormB: React.FC<FormBProps> = ({
                     position="absolute"
                     top="2"
                     right="2"
-                    zIndex={50}
+                    zIndex={30}
                     color="white"
                     fontSize="18pt"
                     cursor="pointer"
-                    onClick={() => removeSelectedFile(i)}
+                    onClick={() => removeSelectedFiles(i)}
                   />
                 </Box>
               ))}
@@ -109,7 +119,7 @@ const FormB: React.FC<FormBProps> = ({
                   width={{ base: "70px", md: "110px" }}
                   mr={2}
                   padding="5px"
-                  onClick={() => selectedFileRef.current?.click()}
+                  onClick={() => selectedFilesRef.current?.click()}
                 >
                   Upload
                 </Button>
@@ -122,8 +132,8 @@ const FormB: React.FC<FormBProps> = ({
             hidden
             max="6"
             multiple
-            ref={selectedFileRef}
-            onChange={onSelectFile}
+            ref={selectedFilesRef}
+            onChange={onSelectFiles}
           />
         </Box>
       </Flex>

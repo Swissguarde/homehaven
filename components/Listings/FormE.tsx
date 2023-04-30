@@ -10,9 +10,35 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-type FormEProps = {};
+type FormEProps = {
+  formData: {
+    address: string;
+    country: string;
+    stateOrCounty: string;
+    city: string;
+    area: string;
+    zipOrPostal: string;
+    latitude: string;
+    longitude: string;
+  };
+  handleChange: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
+};
 
-const FormE: React.FC<FormEProps> = () => {
+const FormE: React.FC<FormEProps> = ({ formData, handleChange }) => {
+  const {
+    address,
+    area,
+    city,
+    country,
+    latitude,
+    longitude,
+    stateOrCounty,
+    zipOrPostal,
+  } = formData;
   return (
     <>
       <Box bg="white" my={10} padding="20px" rounded="14px" boxShadow="md">
@@ -30,6 +56,8 @@ const FormE: React.FC<FormEProps> = () => {
             <Input
               required
               name="address"
+              value={address}
+              onChange={handleChange}
               placeholder="Enter your property address"
               type="text"
               fontSize="10pt"
@@ -54,6 +82,8 @@ const FormE: React.FC<FormEProps> = () => {
             <Input
               required
               name="country"
+              value={country}
+              onChange={handleChange}
               placeholder="Enter the country"
               type="text"
               fontSize="10pt"
@@ -77,7 +107,9 @@ const FormE: React.FC<FormEProps> = () => {
             <Text>State / County</Text>
             <Input
               required
-              name="state"
+              name="stateOrCounty"
+              value={stateOrCounty}
+              onChange={handleChange}
               placeholder="Enter the state / county"
               type="text"
               fontSize="10pt"
@@ -102,6 +134,8 @@ const FormE: React.FC<FormEProps> = () => {
             <Input
               required
               name="city"
+              value={city}
+              onChange={handleChange}
               placeholder="Enter the city"
               type="text"
               fontSize="10pt"
@@ -126,6 +160,8 @@ const FormE: React.FC<FormEProps> = () => {
             <Input
               required
               name="area"
+              value={area}
+              onChange={handleChange}
               placeholder="Enter the area"
               type="text"
               fontSize="10pt"
@@ -149,7 +185,9 @@ const FormE: React.FC<FormEProps> = () => {
             <Text>Zip / Postal Code</Text>
             <Input
               required
-              name="postalCode"
+              name="zipOrPostal"
+              value={zipOrPostal}
+              onChange={handleChange}
               placeholder="Enter zip / postal code"
               type="number"
               fontSize="10pt"
@@ -194,7 +232,9 @@ const FormE: React.FC<FormEProps> = () => {
             <Text>Latitude</Text>
             <Input
               required
-              name="area"
+              name="latitude"
+              value={latitude}
+              onChange={handleChange}
               placeholder="Enter address latitude"
               type="text"
               fontSize="10pt"
@@ -216,7 +256,9 @@ const FormE: React.FC<FormEProps> = () => {
             <Text>Longitude</Text>
             <Input
               required
-              name="area"
+              name="longitude"
+              value={longitude}
+              onChange={handleChange}
               placeholder="Enter address longitude"
               type="text"
               fontSize="10pt"
