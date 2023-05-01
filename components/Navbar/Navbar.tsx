@@ -35,7 +35,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 
   const navLinks = [
     { title: "Property", link: "/" },
-    { title: "Listing", link: "/" },
+    { title: "Listing", link: "/listings" },
     { title: "About", link: "/" },
     { title: "Contact", link: "/" },
   ];
