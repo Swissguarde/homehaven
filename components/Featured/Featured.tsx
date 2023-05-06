@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef } from "react";
+import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import { BiBath, BiBed } from "react-icons/bi";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { MdGarage } from "react-icons/md";
@@ -173,7 +173,7 @@ const Featured: React.FC<FeaturedProps> = () => {
                     objectFit="cover"
                   />
                 ))}
-                <Box position="absolute" top="40%" left="4" zIndex="99">
+                <Box position="absolute" top="40%" left="4" zIndex="40">
                   <Icon
                     onClick={() => handleImageScroll("left")}
                     fontSize={40}
@@ -181,7 +181,7 @@ const Featured: React.FC<FeaturedProps> = () => {
                     as={BsChevronLeft}
                   />
                 </Box>
-                <Box position="absolute" top="40%" right="4" zIndex="99">
+                <Box position="absolute" top="40%" right="4" zIndex="40">
                   <Icon
                     onClick={() => handleImageScroll("right")}
                     fontSize={40}

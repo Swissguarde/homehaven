@@ -1,5 +1,5 @@
 import { auth } from "@/firebase/clientApp";
-import { Box, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -91,13 +91,12 @@ const Navbar: React.FC<NavbarProps> = () => {
           fontSize={{ base: "19pt", md: "22pt" }}
           fontWeight={700}
         >
-          <Text color="white">home</Text>
-          <Text color="blue.400">Haven</Text>
+          <Image src="/images/logo.png" objectFit="cover" />
         </Flex>
       </Link>
 
       <Flex
-        fontSize="14pt"
+        fontSize="13pt"
         display={{ base: "none", lg: "flex" }}
         color="white"
         textTransform="uppercase"
