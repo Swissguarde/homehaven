@@ -1,10 +1,11 @@
+import React from "react";
 import { Listing } from "@/atoms/listingsAtom";
+import RHS from "@/components/Featured/RHS";
 import Listings from "@/components/Listings/Listings";
+import Seo from "@/components/Seo/Seo";
 import { firestore } from "@/firebase/clientApp";
 import PropertyPage from "@/Layout/PropertyPage";
 import { collection, getDocs } from "firebase/firestore";
-import Head from "next/head";
-import React from "react";
 import safeJsonStringify from "safe-json-stringify";
 
 type ListingPageProps = {
@@ -12,24 +13,21 @@ type ListingPageProps = {
 };
 
 const ListingPage: React.FC<ListingPageProps> = ({ listingsData }) => {
-  console.log("listingsData", listingsData);
   return (
     <>
-      <Head>
-        <title>Listings - HomeHaven</title>
-        <meta
-          name="description"
-          content="Discover the perfect home with HomeHaven."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <Seo
+        title="Listings"
+        description="Find your haven with HomeHaven - your one-stop real estate solution."
+      />
 
       <PropertyPage>
         <>
           <Listings listingsData={listingsData} />
         </>
         <>
-          <div>RHS</div>
+          <>
+            <RHS />
+          </>
         </>
       </PropertyPage>
     </>
