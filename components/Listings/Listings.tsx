@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import moment from "moment";
+import Link from "next/link";
 import React from "react";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
@@ -55,6 +56,7 @@ const Listings: React.FC<ListingsProps> = ({ listingsData }) => {
           area,
           creatorDisplayName,
           createdAt,
+          id,
         } = listing;
         return (
           <Flex
@@ -64,13 +66,15 @@ const Listings: React.FC<ListingsProps> = ({ listingsData }) => {
             key={listing.id}
           >
             <Flex mr={{ lg: 3 }}>
-              <Image
-                objectFit="cover"
-                src={imageURLs[0]}
-                width={{ base: "100%", lg: "480px" }}
-                height="170px"
-                rounded="sm"
-              />
+              <Link href={`/listing/${id}`}>
+                <Image
+                  objectFit="cover"
+                  src={imageURLs[0]}
+                  width={{ base: "100%", lg: "480px" }}
+                  height="170px"
+                  rounded="sm"
+                />
+              </Link>
             </Flex>
 
             <Flex
