@@ -52,7 +52,7 @@ const FormE: React.FC<FormEProps> = ({ formData, handleChange }) => {
           gap={6}
         >
           <GridItem>
-            <Text>Address *</Text>
+            <Text>Address </Text>
             <Input
               required
               name="address"

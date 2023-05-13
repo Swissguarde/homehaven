@@ -8,24 +8,23 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-  uploadString,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useRouter } from "next/router";
+
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { MdArrowBackIosNew } from "react-icons/md";
 import FormA from "./FormA";
 import FormB from "./FormB";
 import FormC from "./FormC";
 import FormD from "./FormD";
 import FormE from "./FormE";
+import FormF from "./FormF";
 
 interface FormProps {
   propertyTitle: string;
   propertyDescription: string;
+  price: string;
   propertyType: string;
   propertyStatus: string;
   propertyLabel: string;
@@ -60,6 +59,7 @@ const CreateListingForm: React.FC<CreateListingFormProps> = ({ user }) => {
   const [formData, setFormData] = useState<FormProps>({
     propertyTitle: "",
     propertyDescription: "",
+    price: "",
     propertyType: "",
     propertyStatus: "",
     propertyLabel: "",
@@ -81,6 +81,32 @@ const CreateListingForm: React.FC<CreateListingFormProps> = ({ user }) => {
     latitude: "",
     longitude: "",
   });
+  const {
+    propertyDescription,
+    propertyLabel,
+    propertyTitle,
+    price,
+    propertyStatus,
+    address,
+    area,
+    areaPostFix,
+    areaSize,
+    bathrooms,
+    bedrooms,
+    city,
+    country,
+    garageSize,
+    garages,
+    landArea,
+    latitude,
+    longitude,
+    postFix,
+    propertyType,
+    stateOrCounty,
+    yearBuilt,
+    zipOrPostal,
+  } = formData;
+  const router = useRouter();
 
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const {
@@ -138,21 +164,30 @@ const CreateListingForm: React.FC<CreateListingFormProps> = ({ user }) => {
     { id: 3, component: FormC },
     { id: 4, component: FormD },
     { id: 5, component: FormE },
-    // { id: 6, component: FormF },
+    { id: 6, component: FormF },
   ];
 
   const handleNextStep = () => {
+    if (disabled) {
+      toast.error("Please fill in all fields", {
+        position: "bottom-center",
+      });
+      return;
+    }
     setCurrentStep(currentStep + 1);
   };
 
   const CurrentComponent = formList[currentStep].component;
-  const isLastComponent = CurrentComponent === FormE;
+  const isLastComponent = CurrentComponent === FormF;
   const isFirstComponent = CurrentComponent === FormA;
   const progress = ((currentStep + 1) / 5) * 100;
+
+  const disabled = false;
 
   const handleSubmit = async () => {
     const newListingForm = {
       ...formData,
+      features: selectedFeatures,
       creatorId: user.uid,
       creatorDisplayName: user.email!.split("@")[0],
       createdAt: serverTimestamp(),
@@ -236,7 +271,12 @@ const CreateListingForm: React.FC<CreateListingFormProps> = ({ user }) => {
         zIndex={1}
       >
         {isFirstComponent ? (
-          <Button variant="outline" height="36px" width="100px">
+          <Button
+            onClick={() => router.back()}
+            variant="outline"
+            height="36px"
+            width="100px"
+          >
             Cancel
           </Button>
         ) : (
@@ -260,6 +300,7 @@ const CreateListingForm: React.FC<CreateListingFormProps> = ({ user }) => {
             height="36px"
             width="120px"
             isLoading={loading}
+            isDisabled={disabled}
             onClick={handleSubmit}
           >
             Submit Property

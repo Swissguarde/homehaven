@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Divider,
@@ -10,7 +11,6 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import React from "react";
 
 type FormAProps = {
   formData: {
@@ -19,6 +19,7 @@ type FormAProps = {
     propertyType: string;
     propertyStatus: string;
     propertyLabel: string;
+    price: string;
   };
   handleChange: (
     e: React.ChangeEvent<
@@ -34,6 +35,7 @@ const FormA: React.FC<FormAProps> = ({ formData, handleChange }) => {
     propertyStatus,
     propertyTitle,
     propertyType,
+    price,
   } = formData;
   return (
     <Flex
@@ -49,7 +51,7 @@ const FormA: React.FC<FormAProps> = ({ formData, handleChange }) => {
       </Box>
       <Divider />
       <Flex flexDirection="column" justify="center" mt={10}>
-        <Text>Property Title *</Text>
+        <Text>Property Title </Text>
         <Input
           required
           name="propertyTitle"
@@ -75,7 +77,7 @@ const FormA: React.FC<FormAProps> = ({ formData, handleChange }) => {
         />
       </Flex>
       <Flex flexDirection="column" justify="center" mt={10}>
-        <Text>Property Description *</Text>
+        <Text>Property Description </Text>
         <Textarea
           name="propertyDescription"
           value={propertyDescription}
@@ -97,6 +99,33 @@ const FormA: React.FC<FormAProps> = ({ formData, handleChange }) => {
           }}
           bg="gray.50"
         />
+      </Flex>
+      <Flex flexDirection="column" justify="center" mt={10}>
+        <Text>Price </Text>
+        <Input
+          required
+          name="price"
+          value={price}
+          onChange={handleChange}
+          placeholder="Enter your property's price"
+          type="number"
+          mt={2}
+          fontSize="10pt"
+          _placeholder={{ color: "gray.500" }}
+          _hover={{
+            bg: "white",
+            border: "1px solid",
+            borderColor: "blue.500",
+          }}
+          _focus={{
+            outline: "none",
+            bg: "white",
+            border: "1px solid",
+            borderColor: "blue.500",
+          }}
+          bg="gray.50"
+        />
+        {propertyStatus === "forRent" && <Text>/ month</Text>}
       </Flex>
       <Grid
         mt={10}

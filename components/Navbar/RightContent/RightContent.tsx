@@ -22,7 +22,7 @@ const RightContent: React.FC<RightContentProps> = ({ user }) => {
             <Button
               variant="solid"
               height="40px"
-              display={{ base: "none", sm: "flex" }}
+              display={{ base: "none", md: "flex" }}
               width={{ base: "70px", md: "150px" }}
               mr={2}
               padding="10px"

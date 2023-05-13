@@ -7,7 +7,7 @@ type PropertyPageProps = {
 
 const PropertyPage: React.FC<PropertyPageProps> = ({ children }) => {
   return (
-    <Flex mt={{ base: 28, md: 32 }} justify="center" padding="16px 0">
+    <Flex mt={{ base: 28, md: 32 }} justify="center">
       <Flex width="95%" justify="center" maxWidth="1200px">
         {/* LHS */}
         <Flex

@@ -8,10 +8,10 @@ import Testimonials from "@/components/Testimonials/Testimonials";
 export default function Home() {
   return (
     <>
-      <Seo
-        title="Listings"
+      {/* <Seo
+        title="Home"
         description="Let HomeHaven help you find the key to your new home."
-      />
+      /> */}
       <Hero />
       <Featured />
       <Cities />

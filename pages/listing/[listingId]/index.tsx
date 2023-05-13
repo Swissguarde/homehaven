@@ -18,7 +18,7 @@ const ListingPage: React.FC<ListingPageProps> = ({ listingData }) => {
   return (
     <>
       <Seo
-        title={listingData.propertyTitle}
+        title="property Title here"
         description="Let HomeHaven help you find the key to your new home."
       />
 

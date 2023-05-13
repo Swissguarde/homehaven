@@ -31,4 +31,5 @@ export interface Listing {
   latitude: string;
   longitude: string;
   imageURLs: string[];
+  features: string[];
 }
